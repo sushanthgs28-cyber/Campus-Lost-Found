@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Campus Lost &amp; Found</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+:root{--bg:#F5F8F9;--surface:#fff;--fg:#12262E;--muted:#556A73;--line:#D8E2E6;--teal:#1E8C93;--teal-ink:#0F5C61;--coral-ink:#A8403F;--grad:linear-gradient(135deg,#E9908F,#1E8C93);--on-ink:#fff;--display:'Space Grotesk','Segoe UI',Arial,sans-serif;--body:'Inter','Segoe UI',Arial,sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1A1F;--surface:#15262D;--fg:#E8F1F3;--muted:#9DB2BA;--line:#27404A;--teal:#4FC3CA;--teal-ink:#7ADCE1;--coral-ink:#F0A3A2;--on-ink:#0D1A1F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0D1A1F;--surface:#15262D;--fg:#E8F1F3;--muted:#9DB2BA;--line:#27404A;--teal:#4FC3CA;--teal-ink:#7ADCE1;--coral-ink:#F0A3A2;--on-ink:#0D1A1F;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);padding:0 max(16px,env(safe-area-inset-left)) 0 max(16px,env(safe-area-inset-left))}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
+p{margin:0}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 0}
+.brand{font:700 18px var(--display);display:flex;gap:10px;align-items:center;margin-right:auto}
+.dot{width:26px;height:26px;border-radius:8px;background:var(--grad)}
+.tab{border:0;background:transparent;color:var(--muted);font:600 14px var(--body);padding:8px 12px;border-radius:8px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line)}
+main{padding:24px 0 56px}
+.btn{border:0;border-radius:10px;padding:11px 18px;font:600 15px var(--body);cursor:pointer;background:var(--teal-ink);color:var(--on-ink)}
+.btn.alt,.mini{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.btn:disabled{opacity:.5}
+.mini{border-radius:8px;padding:6px 11px;font:600 13px var(--body);cursor:pointer}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 16px;min-width:110px}
+.stat b{display:block;font:700 22px var(--display)}.stat span{font-size:13px;color:var(--muted)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:16px}.bar>div{flex:1;min-width:150px}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 4px}.bar label{margin-top:0}
+input,select,textarea{width:100%;font:15px var(--body);padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
+textarea{min-height:80px;resize:vertical}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1.5px solid var(--line);background:transparent;color:var(--fg);border-radius:20px;padding:6px 14px;font:500 14px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--teal-ink);border-color:var(--teal-ink);color:var(--on-ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.ph{aspect-ratio:4/3;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font:700 32px var(--display)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.cb{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.cb h3{font-size:1.1rem;overflow-wrap:anywhere}
+.meta{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.tag{display:inline-block;font:600 12px/1 var(--body);border-radius:20px;padding:5px 10px;color:var(--on-ink)}
+.tag.lost{background:var(--coral-ink)}.tag.found{background:var(--teal-ink)}.tag.st{background:var(--muted)}
+.tags,.acts{display:flex;gap:6px;flex-wrap:wrap}.acts{gap:8px;margin-top:auto;padding-top:8px}
+.claim{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.note{font-size:14px;margin-top:8px;min-height:20px;color:var(--teal-ink);font-weight:600;overflow-wrap:anywhere}.note.err{color:var(--coral-ink)}
+.banner{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form{max-width:640px}
+.auth{max-width:420px;margin:48px auto}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.scroll{overflow-x:auto}
+[hidden]{display:none!important}
+@media (max-width:560px){.two{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header><div class="wrap">
+<div class="brand"><span class="dot"></span>Campus Lost &amp; Found</div>
+<nav id="tabs" hidden>
+<button class="tab" data-v="feed">Feed</button><button class="tab" data-v="report">Report an item</button><button class="tab" data-v="mine">My items</button><button class="tab" data-v="admin" id="adminTab" hidden>Moderation</button>
+</nav>
+<button class="mini" id="theme" type="button">Theme</button>
+<button class="mini" id="signout" type="button" hidden>Sign out</button>
+</div></header>
+
+<main class="wrap">
+<div id="banner" class="banner" hidden></div>
+
+<section id="v-auth" class="auth panel" hidden>
+<h2 id="authTitle">Sign in</h2>
+<p class="meta" style="margin:6px 0 10px">Use your university email.</p>
+<form id="authForm">
+<div id="nameRow" hidden><label for="aname">Your name</label><input id="aname" maxlength="40" autocomplete="name"></div>
+<label for="aemail">Email</label><input id="aemail" type="email" required autocomplete="email">
+<label for="apass">Password</label><input id="apass" type="password" required minlength="8" autocomplete="current-password">
+<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="authBtn" type="submit">Sign in</button><button class="btn alt" id="authSwitch" type="button">Create an account</button></div>
+<p class="note" id="authNote" role="status"></p>
+</form></section>
+
+<section id="v-feed" hidden>
+<div class="stats" id="stats"></div>
+<div class="bar">
+<div style="flex:2"><label for="q">Search</label><input id="q" type="search" placeholder="wallet, charger, ID card, Block B"></div>
+<div><label for="fcat">Category</label><select id="fcat"><option value="">All categories</option></select></div>
+<div><label for="fsort">Sort</label><select id="fsort"><option value="new">Newest first</option><option value="old">Oldest first</option></select></div>
+</div>
+<div class="chips" id="chips">
+<button class="chip" data-f="all" aria-pressed="true">All</button><button class="chip" data-f="lost" aria-pressed="false">Lost</button><button class="chip" data-f="found" aria-pressed="false">Found</button><button class="chip" data-f="open" aria-pressed="false">Still open</button><button class="chip" data-f="returned" aria-pressed="false">Returned</button>
+</div>
+<div id="feed" class="grid" aria-live="polite"></div>
+</section>
+
+<section id="v-report" hidden>
+<h2 style="margin-bottom:6px">Report an item</h2>
+<p class="meta" style="margin-bottom:14px">Describe ID cards instead of typing numbers. The hidden detail is checked on the server when someone claims the item and is never shown.</p>
+<form class="panel form" id="form">
+<div class="two"><div><label for="kind" style="margin-top:0">I</label><select id="kind"><option value="lost">lost an item</option><option value="found">found an item</option></select></div>
+<div><label for="cat" style="margin-top:0">Category</label><select id="cat"></select></div></div>
+<label for="name">Item</label><input id="name" required maxlength="60" placeholder="e.g. Black wallet">
+<div class="two"><div><label for="place">Where</label><input id="place" required maxlength="60"></div><div><label for="when" id="whenLbl">Date lost</label><input id="when" type="date"></div></div>
+<label for="desc">Description</label><textarea id="desc" maxlength="400" placeholder="Colour, brand, marks, what was inside"></textarea>
+<label for="hidden">Hidden detail (private)</label><input id="hidden" required maxlength="40" placeholder="e.g. sticker on the back, name inside the cover">
+<div id="foundExtra" hidden>
+<div class="two"><div><label for="ftime">Time found</label><input id="ftime" type="time"></div>
+<div><label for="held">Where is it now?</label><select id="held"><option>With me</option><option>Security desk</option><option>Library front desk</option><option>Department office</option></select></div></div>
+<label for="fcontact">Your contact (shown only after the owner is verified)</label><input id="fcontact" maxlength="60" placeholder="Phone or email">
+</div>
+<label for="handover">Handover point</label>
+<select id="handover"><option>Security desk</option><option>Library front desk</option><option>Department office</option><option>Agree with the finder or owner</option></select>
+<label for="photo">Photo</label><input id="photo" type="file" accept="image/*">
+<div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn" id="submit" type="submit">Post to feed</button><span class="note" id="reportNote" role="status"></span></div>
+</form></section>
+
+<section id="v-mine" hidden>
+<h2 style="margin-bottom:6px">My items</h2>
+<div id="matches" class="panel" hidden style="margin-bottom:16px"></div>
+<div id="mine" class="grid"></div>
+</section>
+
+<section id="v-admin" hidden>
+<h2 style="margin-bottom:6px">Moderation</h2>
+<div class="panel scroll"><table><thead><tr><th>Item</th><th>Type</th><th>Status</th><th>Posted by</th><th>Actions</th></tr></thead><tbody id="adminRows"></tbody></table></div>
+</section>
+</main>
+<script type="module" src="app.js"></script>
+</body></html>
